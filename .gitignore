@@ -1,3 +1,27 @@
 node_modules
 .env
-temp.txt
+dump.rdb
+# Logs
+src\Frontend\logs
+*.log
+src\Frontend\npm-debug.log*
+src\Frontend\yarn-debug.log*
+src\Frontend\yarn-error.log*
+src\Frontend\pnpm-debug.log*
+src\Frontend\lerna-debug.log*
+
+src\Frontend\node_modules
+src\Frontend\dist
+src\Frontend\dist-ssr
+src\Frontend\*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
