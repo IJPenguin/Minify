@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose, { connect } from "mongoose";
+import connection from "./database.js";
 
 const userSchema = new mongoose.Schema({
 	name: {
@@ -41,5 +42,5 @@ const userSchema = new mongoose.Schema({
 	},
 });
 
-const User = mongoose.model("User", userSchema);
+const User = connection.model("User", userSchema);
 module.exports = User;

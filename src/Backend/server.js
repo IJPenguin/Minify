@@ -7,7 +7,7 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import MongoStore from "connect-mongo";
-
+import routes from "./Routes/routesIndex.js";
 config();
 
 const app = express();
@@ -31,12 +31,14 @@ app.use(
 		resave: false,
 		saveUninitialized: true,
 		store: sessionStore,
-		cookie: { maxAge: 60000 * 60 * 24 * 7 }, // 7 days
+		cookie: { maxAge: 60000 * 60 * 24 * 14 },
 	})
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(routes);
 
 app.listen(PORT, () => {
 	console.log(`Server started on http://localhost:${PORT}`);
