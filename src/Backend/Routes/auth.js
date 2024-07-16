@@ -35,7 +35,7 @@ router.post("/auth/register", async (req, res) => {
         const passHash = generatePasswordHash(password);
         const { hash, salt } = passHash;
 
-        const newuser = new User({
+        const newUser = new User({
             name: name,
             hash: hash,
             salt: salt,

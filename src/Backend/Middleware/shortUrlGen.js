@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import Link from "../Models/linkModel";
+import Link from "../Models/linkModel.js";
 
 const shortUrlGenerator = async (longURL) => {
     const secret = "minify";
@@ -29,4 +29,4 @@ const shortUrlGenerator = async (longURL) => {
     return shortUrl;
 };
 
-export default shortUrlGenerator
+export default shortUrlGenerator;
