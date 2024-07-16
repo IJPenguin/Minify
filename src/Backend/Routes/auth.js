@@ -1,9 +1,12 @@
 import { Router } from "express";
 import { generatePasswordHash } from "../Middleware/utils.js";
+import User from "../Models/userModel.js";
 const router = Router();
+import passport from "passport";
+import connection from "../Models/database.js";
 
 router.get("/auth/login", (req, res, next) => {
-	passport.authenticate("local", (err, user, info) => {
+	passport.authenticate("local", (err, user) => {
 		if (err) {
 			return next(err);
 		}
@@ -20,13 +23,13 @@ router.get("/auth/login", (req, res, next) => {
 });
 
 router.post("/auth/register", (req, res, next) => {
-	const passHash = generatePasswordHash(req);
+	const passHash = generatePasswordHash(req.body.password);
 
 	const salt = passHash.salt;
 	const hash = passHash.hash;
 
 	const newUser = new User({
-		username: req.body.username,
+		name: req.body.name,
 		hash: hash,
 		salt: salt,
 		email: req.body.email,

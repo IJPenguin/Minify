@@ -7,4 +7,4 @@ const connection = mongoose
 	.then(() => console.log("Connected to MongoDB"))
 	.catch((err) => console.error("MongoDB connection error:", err));
 
-module.exports = connection;
+export default connection;

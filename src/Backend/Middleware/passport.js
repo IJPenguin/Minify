@@ -1,17 +1,16 @@
 import passport from "passport";
-import { Strategy as LocalStrategy, Strategy } from "passport-local";
+import { Strategy as LocalStrategy } from "passport-local";
 import User from "../Models/User.js";
-import connection from "../Models/database.js";
 import { validatePassword } from "./utils.js";
 
 const customFields = {
-	usernameField: "username",
+	usernameField: "name",
 	passwordField: "password",
 };
 
-const verificationCallback = (username, password, done) => {
+const verificationCallback = (name, password, done) => {
 	User.findOne(
-		{ username: username }
+		{ name: name }
 			.then((user) => {
 				if (!user) {
 					return done(null, false);
@@ -32,7 +31,7 @@ const verificationCallback = (username, password, done) => {
 	);
 };
 
-const strategy = new Strategy(customFields, verificationCallback);
+const strategy = new LocalStrategy(customFields, verificationCallback);
 
 passport.use(strategy);
 

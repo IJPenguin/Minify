@@ -1,7 +1,6 @@
 import express from "express";
 import { config } from "dotenv";
 import compression from "compression";
-import mongoose from "mongoose";
 import cors from "cors";
 import session from "express-session";
 import cookieParser from "cookie-parser";

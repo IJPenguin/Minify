@@ -10,7 +10,7 @@ const validatePassword = (password, hash, salt) => {
 const generatePasswordHash = (password) => {
 	const salt = crypto.randomBytes(32).toString("hex");
 	const hash = crypto
-		.pbkdf2Sync(password, salt, 10000, 64, "sha512")
+		.pbkdf2Sync(password, salt, 310000, 64, "sha512")
 		.toString("hex");
 
 	return {
