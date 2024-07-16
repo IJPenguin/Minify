@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import MongoStore from "connect-mongo";
 import routes from "./Routes/routesIndex.js";
+import "./Middleware/passport.js";
 config();
 
 const app = express();
