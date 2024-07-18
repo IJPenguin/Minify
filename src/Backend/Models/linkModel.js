@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const linkSchema = new mongoose.Schema({
+const userLinkSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -27,5 +27,32 @@ const linkSchema = new mongoose.Schema({
     },
 });
 
-const Link = mongoose.model("Link", linkSchema);
-export default Link;
+const sessionLinkSchema = new mongoose.Schema({
+    sessionId: {
+        type: String,
+        required: true,
+        ref: "User",
+    },
+    originalUrl: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    shortUrl: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    numberOfVisits: {
+        type: Number,
+        default: 0,
+    },
+});
+
+export const userLink = mongoose.model("userLink", userLinkSchema);
+export const sessionLink = mongoose.model("sessionLink", sessionLinkSchema);

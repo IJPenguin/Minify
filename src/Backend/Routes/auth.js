@@ -35,6 +35,8 @@ router.post("/auth/register", async (req, res) => {
         const passHash = generatePasswordHash(password);
         const { hash, salt } = passHash;
 
+        // Manage the links that are stored with session id and the user logs in
+
         const newUser = new User({
             name: name,
             hash: hash,
