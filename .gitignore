@@ -1,6 +1,7 @@
 node_modules
 .env
 dump.rdb
+temp.txt
 # Logs
 src\Frontend\logs
 *.log

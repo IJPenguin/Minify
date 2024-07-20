@@ -1,7 +1,8 @@
-import { userLink, sessionLink } from "../Models/linkModel";
-import User from "../Models/userModel";
+import { userLink, sessionLink } from "../Models/linkModel.js";
+import User from "../Models/userModel.js";
+import shortUrlGenerator from "./shortUrlGen.js";
 
-const createShortLink = async (type, id, url, expiresAt) => {
+export const createShortLink = async (type, id, url, expiresAt) => {
     try {
         const shortUrl = await shortUrlGenerator(url);
         let link = null;
@@ -15,7 +16,7 @@ const createShortLink = async (type, id, url, expiresAt) => {
                 expiresAt: expiresAt,
             });
             link = await newSessionLink.save();
-        } else if (type === "user") {
+        } else if (type === "basic" || type === "premium") {
             const newUserLink = new userLink({
                 userId: id,
                 originalUrl: url,
@@ -33,11 +34,9 @@ const createShortLink = async (type, id, url, expiresAt) => {
         } else {
             throw new Error("Invalid User Type Provided.");
         }
-        return link;
+        return { link, shortUrl };
     } catch (err) {
         console.trace(err);
-        return res.send(500).json({ message: "Internal Server Error" });
+        throw new Error(err.message);
     }
 };
-
-module.exports = { createShortLink };

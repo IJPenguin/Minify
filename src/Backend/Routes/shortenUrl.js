@@ -1,23 +1,17 @@
 import express from "express";
-import shortUrlGenerator from "../Middleware/shortUrlGen.js";
 import { sessionLink } from "../Models/linkModel.js";
+import { createShortLink } from "../Middleware/utils.js";
 import User from "../Models/userModel.js";
 const router = express.Router();
 
 router.post("/shorten", async (req, res) => {
     try {
-        const type = req.isAuthenticated() ? "user" : "session";
+        const userType = req.userType;
         const id = req.isAuthenticated() ? req.user : req.session.id;
-        switch (type) {
-            case "user":
+        switch (userType) {
+            case "basic":
                 const user = await User.findOne({ _id: id });
-                if (!user) {
-                    return res.status(404).json({ message: "User not found." });
-                }
-                if (
-                    !user.premiumSubscription &&
-                    user.numberOfUrlsCreated > 50
-                ) {
+                if (user.numberOfUrlsCreated >= 50) {
                     return res.status(403).json({
                         message:
                             "Upgrade to premium subscription to get more links.",
@@ -28,16 +22,14 @@ router.post("/shorten", async (req, res) => {
                 const numberOfLinks = await sessionLink.countDocuments({
                     sessionId: id,
                 });
-                if (numberOfLinks > 10) {
+                if (numberOfLinks >= 10) {
                     return res.status(403).json({
                         message: "Create an account to get more links.",
                     });
                 }
                 break;
-            default:
-                return res
-                    .status(400)
-                    .json({ message: "Invalid type provided." });
+            case "premium":
+                break;
         }
 
         const url = req.body.originalUrl;
@@ -50,7 +42,12 @@ router.post("/shorten", async (req, res) => {
             : null;
 
         try {
-            const link = await shortUrlGenerator(type, id, url, expiresAt);
+            const { link, shortUrl } = await createShortLink(
+                userType,
+                id,
+                url,
+                expiresAt
+            );
             res.status(201).json({
                 message: "Link Generated!",
                 shortUrl: shortUrl,
