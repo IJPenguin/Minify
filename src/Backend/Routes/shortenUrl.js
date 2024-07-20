@@ -1,49 +1,67 @@
 import express from "express";
 import shortUrlGenerator from "../Middleware/shortUrlGen.js";
-import { userLink, sessionLink } from "../Models/linkModel.js";
+import { sessionLink } from "../Models/linkModel.js";
+import User from "../Models/userModel.js";
 const router = express.Router();
 
 router.post("/shorten", async (req, res) => {
     try {
-        
+        const type = req.isAuthenticated() ? "user" : "session";
+        const id = req.isAuthenticated() ? req.user : req.session.id;
+        switch (type) {
+            case "user":
+                const user = await User.findOne({ _id: id });
+                if (!user) {
+                    return res.status(404).json({ message: "User not found." });
+                }
+                if (
+                    !user.premiumSubscription &&
+                    user.numberOfUrlsCreated > 50
+                ) {
+                    return res.status(403).json({
+                        message:
+                            "Upgrade to premium subscription to get more links.",
+                    });
+                }
+                break;
+            case "session":
+                const numberOfLinks = await sessionLink.countDocuments({
+                    sessionId: id,
+                });
+                if (numberOfLinks > 10) {
+                    return res.status(403).json({
+                        message: "Create an account to get more links.",
+                    });
+                }
+                break;
+            default:
+                return res
+                    .status(400)
+                    .json({ message: "Invalid type provided." });
+        }
+
         const url = req.body.originalUrl;
+
         if (!url) {
-            return res.status(400).json({ message: "URL not provided" });
+            return res.status(400).json({ message: "URL Not Provided." });
         }
-        const shortUrl = await shortUrlGenerator(url);
-        let link = null;
-        if (req.isAuthenticated()) {
-            // Save to Database using userid
-            const newUserLink = new userLink({
-                userId: req.user,
-                originalUrl: url,
-                shortUrl: shortUrl,
-                createdAt: Date.now(),
-                numberOfVisits: 0,
-            });
+        const expiresAt = req.body.expiresAt
+            ? new Date(req.body.expiresAt)
+            : null;
 
-            link = await newUserLink.save();
-        } else {
-            // Save to Database using sessionid
-            const newSessionLink = new sessionLink({
-                sessionId: req.session.id,
-                originalUrl: url,
+        try {
+            const link = await shortUrlGenerator(type, id, url, expiresAt);
+            res.status(201).json({
+                message: "Link Generated!",
                 shortUrl: shortUrl,
-                createdAt: Date.now(),
-                numberOfVisits: 0,
+                link: link,
             });
-
-            link = await newSessionLink.save();
+        } catch (err) {
+            console.trace(err);
+            res.status(500).json({ message: err.message });
         }
-        console.log(shortUrl);
-        res.status(200).json({
-            message: "Link Generated",
-            shortUrl: shortUrl,
-            link: link,
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message });
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error." });
     }
 });
 

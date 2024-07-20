@@ -25,6 +25,10 @@ const userLinkSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    expiresAt: {
+        type: Date,
+        default: null,
+    },
 });
 
 const sessionLinkSchema = new mongoose.Schema({
@@ -51,6 +55,10 @@ const sessionLinkSchema = new mongoose.Schema({
     numberOfVisits: {
         type: Number,
         default: 0,
+    },
+    expiresAt: {
+        type: Date,
+        default: null,
     },
 });
 

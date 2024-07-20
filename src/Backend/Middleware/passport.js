@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import User from "../Models/userModel.js";
-import { validatePassword } from "./utils.js";
+import { validatePassword } from "./passwordutils.js";
 
 const customFields = {
     usernameField: "name",

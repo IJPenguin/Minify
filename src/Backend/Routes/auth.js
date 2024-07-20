@@ -1,9 +1,8 @@
 import { Router } from "express";
-import { generatePasswordHash } from "../Middleware/utils.js";
+import { generatePasswordHash } from "../Middleware/passwordutils.js";
 import User from "../Models/userModel.js";
 const router = Router();
 import passport from "passport";
-import connection from "../Models/database.js";
 
 router.post("/auth/login", (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
