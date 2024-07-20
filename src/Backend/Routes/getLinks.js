@@ -8,7 +8,7 @@ router.get("/link/get-links", async (req, res) => {
 
         const links =
             userType === "session"
-                ? await sessionLink.find({ _id: req.session.id })
+                ? await sessionLink.find({ sessionId: req.session.id })
                 : await userLink.find({ _id: req.user });
 
         res.status(200).json({ links: links });

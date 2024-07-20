@@ -4,7 +4,7 @@ import { createShortLink } from "../Middleware/utils.js";
 import User from "../Models/userModel.js";
 const router = express.Router();
 
-router.post("/link/shorten", async (req, res) => {
+router.post("/link/minify", async (req, res) => {
     try {
         const userType = req.userType;
         const id = req.isAuthenticated() ? req.user : req.session.id;
