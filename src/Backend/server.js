@@ -6,7 +6,7 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import MongoStore from "connect-mongo";
-import routes from "./Routes/routesIndex.js";
+import routes from "./index.js";
 import { userAuthenticationCheck } from "./Middleware/userAuthenticationCheck.js";
 import "./Middleware/passport.js";
 config();
