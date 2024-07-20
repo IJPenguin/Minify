@@ -9,7 +9,7 @@ router.get("/", (req, res, next) => {
     }
 });
 
-router.get("/get-cookies", (req, res, next) => {
+router.get("/debug/get-cookies", (req, res, next) => {
     const cookies = req.cookies;
     res.status(200).json({
         message: "cookies",
