@@ -2,9 +2,9 @@ import { userLink, sessionLink } from "../Models/linkModel.js";
 import User from "../Models/userModel.js";
 import shortUrlGenerator from "./shortUrlGen.js";
 
-export const createShortLink = async (type, id, url, expiresAt) => {
+export const createShortLink = async (type, id, url, expiresAt, alias) => {
     try {
-        const shortUrl = await shortUrlGenerator(url);
+        const shortUrl = alias ?? (await shortUrlGenerator(url));
         let link = null;
         if (type === "session") {
             const newSessionLink = new sessionLink({
