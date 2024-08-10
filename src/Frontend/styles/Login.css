@@ -1,0 +1,135 @@
+src/frontend/styles/Login.css
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  background-color: #495057;
+}
+
+#root {
+  height: 100%;
+}
+
+.header {
+  width: 100%;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #495057;
+  color: #fff; /* Ensure the text color is white for visibility */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.header .logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 1rem;
+}
+
+.header h1 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.5rem;
+  color: #000; /* Change to a lighter color for better visibility */
+}
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.login-container {
+  background-color: #ced4da;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(199, 163, 163, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px; /* Optional: restrict the maximum width */
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.login-container h2 {
+  font-family: "JetBrains Mono", monospace;
+  margin-bottom: 1rem;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+
+.google-btn {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.login-btn {
+  background-color: #495057;
+  color: #ced4da;
+  margin-bottom: 1rem; /* Add margin between the buttons */
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  width: 100%;
+  color: #495057;
+}
+
+.divider span {
+  margin: 0 1rem;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: #444;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.google-btn img {
+  width: 20px;
+  margin-right: 1rem;
+}
