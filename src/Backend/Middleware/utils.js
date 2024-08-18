@@ -40,3 +40,11 @@ export const createShortLink = async (type, id, url, expiresAt, alias) => {
         throw new Error(err.message);
     }
 };
+
+export const normalizeUrl = (url) => {
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        url = `http://${url}`;
+    }
+
+    return url;
+};
